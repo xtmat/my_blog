@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="centerstage">
+  {% for post in post_list %}
+  <div class="post loader">
+    {% if not post.published_date %}
+    <h2> Unpublished Post </h2>
+    {% endif %}
+    <h1 class=post-title-list><a href="{% url "post_detail" pk=post.pk %}"> {{ post.title }} </a></h1>
+
+    <div class="date">
+      <p> {{ post.published_date|date:'d M Y' }}</p>
+    </div>
+    {% if not post.published_date %}
+    <h3> Create Date {{post.created_date|date:'d M Y'}} </h3>
+    {% endif %}
+      <a href="{% url "post_detail" pk=post.pk %}"> Comments: {{ post.approved_comments.count }} </a>
+  </div>
+  {% endfor %}
+  </div>
+{% endblock %}

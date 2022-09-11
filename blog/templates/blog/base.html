@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Base</title>
+    <!-- Bootstrap -->
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- medium text-editor  -->
+    <script src="//cdn.jsdelivr.net/npm/medium-editor@latest/dist/js/medium-editor.min.js"></script>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/medium-editor@latest/dist/css/medium-editor.min.css" type="text/css" media="screen" charset="utf-8">
+
+
+    <!-- custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+    <link rel="stylesheet" href="{% static 'css/alert.css' %}">
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200&family=Oswald&display=swap" rel="stylesheet">
+
+<!-- jquery -->
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+  </head>
+  <body>
+
+    <!-- navbar -->
+    <nav class="navbar navbar-default navbar-custom" >
+      <div class="container">
+        <ul class="nav navbar-nav">
+          <li> <a class = "navbar-brand bigbrand" href="{% url "posts_list"%}">Home</a></li>
+          <li> <a class="navbar-link" href="{% url "about" %}" style ="pointer-events:none">About </a></li>
+          <li> <a class="navbar-link disabled" href="https://github.com/ZenghXmistU">Github </a></li>
+          <li> <a class="navbar-link" href="https://www.linkedin.com/in/atul-kumar-4026b7220/" > Linkdin </a></li>
+        </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+        {% if user.is_authenticated %}
+        <li><a href="{% url 'new_post' %}">New Post </a></li>
+        <li><a href="{% url 'drafts_list' %}">Drafts </a></li>
+        <li><a href="{% url 'logout' %}">Log Out</a></li>
+        <li> Welcome : {{ user.username }}</li>
+        {% else %}
+        <li><a class = "nav navbar-right" href="{% url 'login' %}"><span class="glyphicon glyphicon-user"></span>Log in</a></li>
+        {% endif %}
+      </ul>
+     </div>
+    </nav>
+
+
+    <!-- block content -->
+    <div class="content container">
+      <div class="row">
+        <div class="col-md-8">
+          <div class="blog_posts">
+            {% block content %}
+            {% endblock %}
+          </div>
+        </div>
+      </div>
+      <!-- messages and alert -->
+      {% include 'partials/messages.html' %}
+    </div>
+
+<!-- {% if messages %}
+  <ul class="messages">
+    {% for message in messages %}
+      <li class="{{ message.tags }}">{{ message }}</li>
+    {% endfor %}
+  </ul>
+{% endif %} -->
+ </body>
+</html>

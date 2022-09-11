@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="posttitle loader"> {{ post.title }} </h1>
+{% if post.published_date %}
+  <div class="date postdate">
+    {{ post.published_date }}
+  </div>
+{% else %}
+  <a class="btn btn-primary" href="{% url 'publish_post' pk=post.pk %}"> Publish </a>
+{% endif %}
+
+<p id ="postcontent loader"> {{ post.text|safe|linebreaksbr }} </p>
+
+{% if user.is_authenticated %}
+<a class="btn btn-primary" href="{% url "edit_post" pk=post.pk %}"> <span class="glyphicon glyphicon-pencil"></span>Edit Post </a>
+
+<a class="btn btn-primary" href="{% url "delete_post" pk=post.pk %}"><span class="glyphicon glyphicon-remove">Remove Post</span></a>
+{% endif%}
+
+<hr>
+
+<a class="btn btn-primary btn-comment" href="{% url "comment" pk=post.pk %}"> <span class="glyphicon glyphicon-comment"></span> Comment </a>
+
+<div class="container">
+  {% if not empty %}
+  <h2>Comments </h2>
+  {% endif %}
+  {% for comment in post.comments.all %}
+
+  {% if user.is_authenticated or comment.approved_comment %}
+<!-- The biggest mistake was down in these two buttons here  -->
+      {% if not comment.approved_comment %}
+        <a class="btn btn-primary" href="{% url "approve_comment" pk=comment.pk %}"> <span class="glyphicon glyphicon-pencil"></span>Approve Comment </a>
+
+        <a class="btn btn-primary" href="{% url "remove_comment" pk=comment.pk %}"><span class="glyphicon glyphicon-remove">Remove Comment </span></a>
+      {% endif%}
+
+      {% if comment.approved_comment %}
+      <hr>
+      {% endif %}
+      <p> {{ comment.text|safe|linebreaks }} </p>
+      <p> Posted by: {{comment.author}}
+      {{ comment.created_date }}
+
+  {% endif %}
+
+  {% empty %}
+  <p> No comments!</p>
+
+  {% endfor %}
+
+</div>
+
+
+{% endblock %}

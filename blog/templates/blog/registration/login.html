@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class='jumbotron'>
+
+{% if form.errors %}
+  <p> Wrong Username or password input ! Please check and try again </p>
+{% endif %}
+{% if user.is_authenticated %}
+  <input type="hidden" name = next value = "{{ next }}">
+{% else %}
+<h2> Please Login : </h2>
+<h3> Must be a super user to be able to login </h3>
+
+  <form action="{% url 'login' %}" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" class = "btn btn-primary" value = "Login">
+    <input type="hidden" name = next value = "{{ next }}">
+  </form>
+{% endif %}
+  </div>
+
+{% endblock %}

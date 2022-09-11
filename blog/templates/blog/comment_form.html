@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="comment-form loader">
+<h2> Add New Comment </h2>
+
+<form method="POST">
+
+  {% csrf_token %}
+  {{ form.as_p }}
+  <input type="submit" class="save btn btn-default" value="submit"> </input>
+
+</form>
+</div>
+<script> var editor = new MediumEditor('.editable') </script>
+
+{% endblock %}

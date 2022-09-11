@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+<h3> Are you sure , You want to delete this post </h3>
+
+<form class="delete-confirm" method="POST">
+  {% csrf_token %}
+  <input class="btn btn-danger" type="submit" value="Delete" >
+</form>
+  <button type="submit" class = "btn btn-primary" onclick="history.go(-1)"> Back </button>
+
+{% endblock %}
