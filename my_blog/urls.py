@@ -26,5 +26,6 @@ urlpatterns = [
     path('accounts/login/',LoginView.as_view(),name='login'),
     path('',PostListView.as_view(),name='home'),
     path('accounts/logout/',LogoutView.as_view(),name='logout',kwargs={'next_page':'/'}),
-    path("api/v1/", include("blog.api_urls")),
+    # path("api/v1/", include("blog.api_urls")),
+    path("api/v1/",include("blog.api.urls")),
 ]
